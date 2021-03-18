@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+      integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>당신과 어울리는 유지민은?</title>
+  </head>
+  <body class="container">
+    <article class="start">
+      <h1 class="mt-5 text-center">당신과 어울리는 유지민은?</h1>
+      <button type="button" class="btn btn-primary mt-5" onclick="start();">
+        당신의 유지민을 확인하세요!
+      </button>
+    </article>
+    <article class="question">
+      <div class="progress mt-5">
+        <div
+          class="progress-bar"
+          role="progressbar"
+          style="width: calc(100 / 12 * 1%)"
+        ></div>
+      </div>
+      <h2 id="title" class="text-center mt-5">문제</h2>
+      <input id="type" type="hidden" value="EI" />
+      <button id="A" type="button" class="btn btn-primary mt-5">Primary</button>
+      <button id="B" type="button" class="btn btn-primary mt-5">Primary</button>
+    </article>
+    <article class="result">
+      <img
+        id="img"
+        class="rounded-circle mt-5"
+        src="merong_jimin.jpeg"
+        alt="jimin"
+      />
+      <h2 id="jimin" class="text-center mt-5">당신의 유지민</h2>
+      <h3 id="explain" class="text-center mt-5">설명</h3>
+    </article>
+    <input type="hidden" id="EI" value="0" />
+    <input type="hidden" id="SN" value="0" />
+    <input type="hidden" id="TF" value="0" />
+    <input type="hidden" id="JP" value="0" />
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      var num = 1;
+      var q = {
+        1: {
+          title:
+            "<strong>문제 1번</strong><br><br>다른 사람들에게 자신을 소개하는 것을 잘합니다.",
+          type: "EI",
+          A: "네",
+          B: "아니오",
+        },
+        2: {
+          title:
+            "<strong>문제 2번</strong><br><br>보통 대화를 먼저 시작합니다.",
+          type: "EI",
+          A: "네",
+          B: "아니오",
+        },
+        3: {
+          title:
+            "<strong>문제 3번</strong><br><br>대개 의욕적이고 활동적입니다.",
+          type: "EI",
+          A: "네",
+          B: "아니오",
+        },
+        4: {
+          title:
+            "<strong>문제 4번</strong><br><br>체계적인 것보다 적응을 잘 하는 것이 더 중요합니다.",
+          type: "SN",
+          A: "네",
+          B: "아니오",
+        },
+        5: {
+          title:
+            "<strong>문제 5번</strong><br><br>본인이 현실적이기보다 창의적인 사람이라고 생각합니다.",
+          type: "SN",
+          A: "네",
+          B: "아니오",
+        },
+        6: {
+          title:
+            "<strong>문제 6번</strong><br><br>계획의 수립과 이행이 모든 프로젝트에서 가장 중요하지는 않습니다.",
+          type: "SN",
+          A: "네",
+          B: "아니오",
+        },
+        7: {
+          title:
+            "<strong>문제 7번</strong><br><br>중압감을 받을 때에도 쉽게 집중력을 유지할 수 있습니다.",
+          type: "TF",
+          A: "네",
+          B: "아니오",
+        },
+        8: {
+          title:
+            "<strong>문제 8번</strong><br><br>종종 주변을 무시하거나 잊어버리는 생각에 빠지지 않습니다.",
+          type: "TF",
+          A: "네",
+          B: "아니오",
+        },
+        9: {
+          title:
+            "<strong>문제 9번</strong><br><br>논쟁에서 이기는 것이 상대방을 불쾌하지 않도록 하는 것보다 더 중요합니다.",
+          type: "TF",
+          A: "네",
+          B: "아니오",
+        },
+        10: {
+          title:
+            "<strong>문제 10번</strong><br><br>이메일에 가능한 빨리 회신하려고 하고 지저분한 편지함을 참을 수 없습니다.",
+          type: "JP",
+          A: "네",
+          B: "아니오",
+        },
+        11: {
+          title:
+            "<strong>문제 11번</strong><br><br>순전히 호기심 때문에 행동을 하는 경우는 거의 없습니다.",
+          type: "JP",
+          A: "네",
+          B: "아니오",
+        },
+        12: {
+          title:
+            "<strong>문제 12번</strong><br><br>집과 업무 환경이 잘 정돈되어 있습니다.",
+          type: "JP",
+          A: "네",
+          B: "아니오",
+        },
+      };
+      var result = {
+        ISTJ: {
+          jimin: "<strong>프로먹방러 유지민</strong>",
+          explain:
+            "책임감이 강하고 현실적이며, 매사에 철저한 성격입니다.<br><br>먹는 것도 열심인 유지민, 그녀와 맛있는 걸 먹으세요!",
+          img: "eating_jimin.jpeg",
+        },
+        ISTP: {
+          jimin: "<strong>과묵한 유지민</strong>",
+          explain:
+            "분석적이며 과묵한 성격을 지니고 있고, 적응력이 강합니다.<br><br>한강에 놀러왔음에도 불구하고 정적인 표정을 유지하는 유지민, 조용한 당신에게 딱!",
+          img: "boring_jimin.JPG",
+        },
+        ESTP: {
+          jimin: "<strong>하품하는 유지민</strong>",
+          explain:
+            "느긋하고 관용적이며, 현실적인 문제를 잘 해결하고 타협을 잘하는 성격입니다.<br><br>너무 느긋했던 나머지 하품을 하는 유지민, 당신과 잘 어울리지 않나요?",
+          img: "yawning_jimin.jpeg",
+        },
+        ESTJ: {
+          jimin: "<strong>드림 컴스 트루 유지민</strong>",
+          explain:
+            "체계적이고 사실적인 목표를 중요하게 생각하고, 자신에게 엄격한 편입니다.<br><br>꿈을 향해 열심히 공부하는 유지민, 그녀와 함께 목표를 이뤄 보세요!",
+          img: "working_jimin.jpeg",
+        },
+        ISFJ: {
+          jimin: "<strong>수련 중인 유지민</strong>",
+          explain:
+            "차분하고 헌신적이며, 인내심이 강합니다. 주변 사람의 감정 변화에 주의를 기울입니다.<br><br>자신의 인내심을 시험해 보고자 스스로 벌을 받고 있는 유지민, 그녀를 구해 주세요!",
+          img: "getting_scolded_jimin.JPG",
+        },
+        ISFP: {
+          jimin: "<strong>탈진한 유지민</strong>",
+          explain:
+            "겸손하고 온화한 편이며, 삶의 여유를 중요하게 생각합니다.<br><br>열심히 게임을 한 후 탈진한 유지민, 이제는 온화해졌을까요?",
+          img: "tired_jimin.JPG",
+        },
+        ESFP: {
+          jimin: "<strong>미니마우스 유지민</strong>",
+          explain:
+            "수완 좋은 활동가형으로 개방적이며 호기심이 많습니다.<br><br>호기심에 미니마우스 머리띠를 착용해 본 유지민, 너무 귀엽지 않나요?",
+          img: "minnie_mouse_jimin.jpeg",
+        },
+        ESFJ: {
+          jimin: "<strong>인형이 좋아 유지민</strong>",
+          explain:
+            "친절하고 타인에게 동정심이 많습니다. 타인에게 관심이 많은 성격입니다.<br><br>타인에게 관심이 많지만 주변에 사람이 없어 인형과 놀고 있는 유지민, 그녀와 놀아 주세요!",
+          img: "love_doll_jimin.JPG",
+        },
+        INFJ: {
+          jimin: "<strong>발표자 유지민</strong>",
+          explain:
+            "통찰력이 놓아 많은 이들에게 영감을 주고, 공동체를 중요하게 생각합니다.<br><br>발표를 통해 사람들에게 영감을 주고 있는 유지민, 멋있지 않나요?",
+          img: "giving_a_presentation_jimin.JPG",
+        },
+        INFP: {
+          jimin: "<strong>산타클로스 유지민</strong>",
+          explain:
+            "이해심이 많고 개방적이며, 타인의 감정을 주요하게 살핍니다.<br><br>슬픈 당신을 위해 선물을 준비한 유지민, 완전 감동이지 않나요?",
+          img: "happy_jimin.jpeg",
+        },
+        ENFP: {
+          jimin: "<strong>아기 유지민</strong>",
+          explain:
+            "틀에 박힌 활동을 지루해하며 상상력이 많고 남들과 잘 어울립니다.<br><br>틀에 박힌 것을 싫어한 나머지 아기가 되어 버린 유지민, 다시 원래대로 돌아올 수 있을까요?",
+          img: "baby_jimin.JPG",
+        },
+        ENFJ: {
+          jimin: "<strong>메롱 유지민</strong>",
+          explain:
+            "비판에 민감하게 반응하며 타인과 사교적으로 지내는 것을 좋아합니다.<br><br>비판만 하면 메롱을 남발하는 유지민, 정말 그녀는 사교적인 걸까요?",
+          img: "merong_jimin.jpeg",
+        },
+        INTJ: {
+          jimin: "<strong>찐따 유지민</strong>",
+          explain:
+            "분석력이 뛰어나고 의지가 강하며, 독립적인 성격입니다.<br><br>너무 독립적인 나머지 찐따 같은 표정을 짓는 유지민, 하지만 귀엽지 않나요?",
+          img: "funny_jimin.JPG",
+        },
+        INTP: {
+          jimin: "<strong>쁘이 유지민</strong>",
+          explain:
+            "잠재력과 가능성을 주요하게 생각하고 지적인 호기심이 많습니다.<br><br>지적인 호기심이 채워지면 쁘이를 하는 유지민, 그녀에게 더 많은 지식을 제공해 주세요!",
+          img: "v_jimin.jpeg",
+        },
+        ENTP: {
+          jimin: "<strong>귀욤댕 유지민</strong>",
+          explain:
+            "박학다식한 편이며, 끊임없는 도전을 추구합니다.<br><br>끊임없이 이상한 표정을 도전하는 유지민, 응원합니다!",
+          img: "cute_jimin.jpeg",
+        },
+        ENTJ: {
+          jimin: "<strong>새침한 유지민</strong>",
+          explain:
+            "활동적이고 통솔적인 편입니다. 철저하고 단호한 성격입니다.<br><br>철저하고 단호하지만 새침한 유지민, 정말 매력 있지 않나요?",
+          img: "coy_jimin.jpeg",
+        },
+      };
+      function start() {
+        $(".start").hide();
+        $(".question").show();
+        next();
+      }
+      $("#A").click(function () {
+        var type = $("#type").val();
+        var preValue = $("#" + type).val();
+        $("#" + type).val(parseInt(preValue) + 1);
+        next();
+      });
+      $("#B").click(function () {
+        next();
+      });
+      function next() {
+        if (num == 13) {
+          $(".question").hide();
+          $(".result").show();
+          var mbti = "";
+          $("#EI").val() < 2 ? (mbti += "I") : (mbti += "E");
+          $("#SN").val() < 2 ? (mbti += "N") : (mbti += "S");
+          $("#TF").val() < 2 ? (mbti += "F") : (mbti += "T");
+          $("#JP").val() < 2 ? (mbti += "P") : (mbti += "J");
+          alert(mbti);
+          $("#img").attr("src", result[mbti]["img"]);
+          $("#jimin").html(result[mbti]["jimin"]);
+          $("#explain").html(result[mbti]["explain"]);
+        } else {
+          $(".progress-bar").attr(
+            "style",
+            "width: calc(100 / 12 * " + num + "%)"
+          );
+          $("#title").html(q[num]["title"]);
+          $("#type").val(q[num]["type"]);
+          $("#A").html(q[num]["A"]);
+          $("#B").html(q[num]["B"]);
+          num++;
+        }
+      }
+    </script>
+  </body>
+</html>
